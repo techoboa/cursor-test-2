@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 .env
 .cursor/hooks/.save_count
+.cursor/hooks/auto-commit.log
