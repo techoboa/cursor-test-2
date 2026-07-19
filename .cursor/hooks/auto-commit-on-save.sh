@@ -1,8 +1,9 @@
 #!/bin/bash
-# Cursor afterFileEdit hook: counts file save operations and, every 5th save,
-# commits and pushes all changes to the configured GitHub remote.
+# Shared logic: counts one "save operation" and, every SAVE_THRESHOLD-th
+# call, commits and pushes all outstanding changes to the configured
+# GitHub remote. Invoked once per detected save by watch-all-saves.sh.
 #
-# Fails open: any error here only logs a message and never blocks the edit.
+# Fails open: any error here only logs a message and never blocks anything.
 
 set -u
 
@@ -16,9 +17,6 @@ BRANCH="main"
 log() {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$LOG_FILE"
 }
-
-# Consume stdin (hook input JSON) so Cursor doesn't see a broken pipe.
-cat > /dev/null
 
 cd "$REPO_ROOT" || exit 0
 
@@ -36,6 +34,7 @@ case "$count" in
 esac
 
 count=$((count + 1))
+log "Save operation detected (count=$count/$SAVE_THRESHOLD)."
 
 if [ "$count" -lt "$SAVE_THRESHOLD" ]; then
   echo "$count" > "$COUNT_FILE"

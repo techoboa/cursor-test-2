@@ -5,3 +5,6 @@ __pycache__/
 .env
 .cursor/hooks/.save_count
 .cursor/hooks/auto-commit.log
+.cursor/hooks/watcher.log
+.cursor/hooks/.watcher.pid
+src/app/certs/*.pem

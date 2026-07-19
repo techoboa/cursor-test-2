@@ -1,3 +1,10 @@
 fastapi
+uvicorn[standard]
+pydantic>=2
+pydantic-settings
 psycopg2-binary
+slowapi
 # test
+pytest
+pytest-asyncio
+httpx
